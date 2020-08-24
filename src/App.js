@@ -20,7 +20,11 @@ function App() {
       {/* SWTICH renders the first child that maches the URL */}
       <Route exact path="/"><Home/></Route>
       <Route exact path = "/cart" > <Cart/> </Route>
+<<<<<<< HEAD
       <Route path="/cocktail/:id"><SingleProduct/></Route>
+=======
+      <Route path="/product/:id"><SingleProduct/></Route>
+>>>>>>> fetched data from the fakerstore api and displayed it on the home page
       <Route exact path = "*" > <Error/> </Route>
 
       {/* < Route path = "*"> <Error/> </Route> */}
