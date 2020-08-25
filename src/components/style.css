@@ -16,7 +16,11 @@ li, a, button {
     sans-serif;
     font-weight: 500; 
     font-size: 16px;
+<<<<<<< HEAD
     color: #476a2e;
+=======
+    color: #edf0f1;
+>>>>>>> 631d696d5ec4f65516922ba93c6e4ce67ed2b8ed
     text-decoration: none;
 }
 .nav_links {

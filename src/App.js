@@ -20,7 +20,10 @@ function App() {
       {/* SWTICH renders the first child that maches the URL */}
       <Route exact path="/"><Home/></Route>
       <Route exact path = "/cart" > <Cart/> </Route>
+<<<<<<< HEAD
       <Route path="/cocktail/:id"><SingleProduct/></Route>
+=======
+>>>>>>> 631d696d5ec4f65516922ba93c6e4ce67ed2b8ed
       <Route path="/product/:id"><SingleProduct/></Route>
       <Route exact path = "*" > <Error/> </Route>
 

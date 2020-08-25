@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
 import CartList from '../components/CartList'
 import {ProductConsumer} from '../context/context'
 
@@ -41,6 +42,14 @@ class cart extends Component {
                     }
                 </ProductConsumer>
                 {/* <h1>Total: {this.outputTotal}</h1> */}
+=======
+
+class cart extends Component {
+    render() {
+        return (
+            <div>
+                <h1>from cart page </h1>
+>>>>>>> 631d696d5ec4f65516922ba93c6e4ce67ed2b8ed
             </div>
         );
     }
