@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
-
 const ProductContext = React.createContext()
 class ProductProvider extends Component {
     state = {
         products: [],
-<<<<<<< HEAD
-        loading: false
-    }
-
-=======
         loading: false,
         clickedProduct: {
             "id": 1,
@@ -17,21 +11,39 @@ class ProductProvider extends Component {
             "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
             "category": "men clothing",
             "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
-        }
+        },
+        productsAddedToCart: [],
+        total: 0
     }
-    
     getItem = (id) => {
         const product = this.state.products.find((item) => item.id === id);
         return product; 
     }
-
     handleDetail = (id) => {
         const product = this.getItem(id)
         this.setState({
             clickedProduct: product
         })
     }
->>>>>>> fetched data from the fakerstore api and displayed it on the home page
+
+    removeToCart = (id) => {
+        const sorted = this.state.productsAddedToCart.filter(
+            (prod) => prod.id !== id
+        );
+        this.setState({
+            productsAddedToCart: sorted,
+            total: this.state.total - this.getItem(id).price
+        })
+
+    }
+
+    addToCart = (id) => {
+            const product = this.getItem(id)
+            this.setState({
+                productsAddedToCart: [...this.state.productsAddedToCart, product],
+                total: this.state.total += product.price
+            })
+    }
     async componentDidMount() {
         this.setState({
             loading: true
@@ -41,12 +53,7 @@ class ProductProvider extends Component {
             const data = await response.json();
             if(data) {
                 this.setState({
-<<<<<<< HEAD
                     products: data
-=======
-                    products: data,
-                    clickedProduct: data[0]
->>>>>>> fetched data from the fakerstore api and displayed it on the home page
                 })
             } else {
                 this.setState({
@@ -67,31 +74,19 @@ class ProductProvider extends Component {
             return <h2>Loading...</h2>
         }
 }
-    
-<<<<<<< HEAD
-    handleDetail = () => {
-        console.log("form handle deartail method")
-    }
-=======
-
->>>>>>> fetched data from the fakerstore api and displayed it on the home page
-    addToCart = () => {
-        console.log("from add to card method")
-    }
 
     render() {
         return (
             < ProductContext.Provider value = {
-<<<<<<< HEAD
-                {...this.state, handleDetail: this.handleDetail,
-=======
                 {
-                    ...this.state,
-                    handleDetail: this.handleDetail,
->>>>>>> fetched data from the fakerstore api and displayed it on the home page
+                ...this.state,
+                handleDetail: this.handleDetail,
+                productsAddedToCart: this.state.productsAddedToCart,
+                removeToCart: this.removeToCart,
                 addToCart: this.addToCart}}>
                 {this.props.children}
             </ProductContext.Provider>
+            
         )
     }
 }
