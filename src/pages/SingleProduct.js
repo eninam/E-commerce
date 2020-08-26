@@ -8,7 +8,7 @@ class SingleProduct extends Component {
         return (
             <ProductConsumer>
                 {value => {
-<<<<<<< HEAD
+// <<<<<<< HEAD
                     const { title, image, description, category, price} 
                     = value.clickedProduct;
                     return(
@@ -22,21 +22,7 @@ class SingleProduct extends Component {
                             <Link to='/cart'><button className="btn btn-primary ">go to cart </button></Link>
                         </div>
                         </article>
-=======
-                    const {id, title, image, description, category, price} 
-                    = value.clickedProduct;
-                    return(
-                        <div>
-                        <h2>{title}</h2>
-                        <p>category: {category}</p>
-                        <p>description: {description}</p>
-                        <p>price: {price}</p>
-                        <img src={image} alt={title}/>
-                        <Link to='/cart'><button>add and go to cart </button></Link>
-                        </div>
->>>>>>> 631d696d5ec4f65516922ba93c6e4ce67ed2b8ed
-                    )
-                }}
+                    )} }
             </ProductConsumer>
         );
     }

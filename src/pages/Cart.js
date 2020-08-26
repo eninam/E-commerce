@@ -1,58 +1,49 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
 import CartList from '../components/CartList'
 import {ProductConsumer} from '../context/context'
+import StripeCheckout from 'react-stripe-checkout'
+import axios from 'axios'
+import {toast} from 'react-toastify'
+  import 'react-toastify/dist/ReactToastify.css';
 
+toast.configure();
 class cart extends Component {
-    state = {
-        total : 0
-    }
-
-    // setTotal() {
-    //     return (
-    //         <ProductConsumer>
-    //                 {
-    //                     value => {
-    //                         this.setState({
-    //                             total: value.total
-    //                         })
-    //                     }
-    //                 }
-    //             </ProductConsumer>
-    //     )
-    // }
-    outputTotal = (count, price) => {
-        // f (typeof count !== 'undefined') {
-         console.log("count " + count + "product " + count * price)
-        const t =  count * price;
-        this.setState({
-            total: this.state.total + t
-        }, () => console.log("total " + this.state.total))
     
+    async handleToken(token){
+        const response = await axios.post('http://localhost:8080/checkout', {
+            token
+        });
+        const {status} =  response.data
+        if(status === 'success') {
+            toast('Success! check email for details', {type: 'success'})
+        } else {
+            toast('Something went wrong', {
+                type: 'error'
+            });
+        }
     }
     render() {
         return (
             <div>
                 < CartList outputTotal={this.outputTotal}/>
                 <ProductConsumer>
-                    {
-                        value => {
-                            return ( <h1>Total: {value.total + this.state.total}</h1>)
-                        }
-                    }
+                    {value => {
+                        return ( 
+                        <div>
+                            <h1>Total: {value.total}</h1>
+                            <StripeCheckout
+                            stripeKey = 'pk_test_51HKRKyIlwRlJnt5AAisaSu5k7KmW266otLxuFT563o18PGyP3N3jNJT6W0cz53CGOmbEff0SGjy7oWjUGCGmjdZ000lxfEdQPE'
+                            token={this.handleToken}
+                            billingAddress
+                            shippingAddress
+                            amount={value.total * 100}
+                            name="products"/> 
+                            </div>
+                            )
+                        }}
                 </ProductConsumer>
-                {/* <h1>Total: {this.outputTotal}</h1> */}
-=======
-
-class cart extends Component {
-    render() {
-        return (
-            <div>
-                <h1>from cart page </h1>
->>>>>>> 631d696d5ec4f65516922ba93c6e4ce67ed2b8ed
             </div>
-        );
-    }
+        )}   
 }
 
 export default cart;

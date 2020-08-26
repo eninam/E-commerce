@@ -1,8 +1,4 @@
 import React, { Component } from 'react';
-<<<<<<< HEAD
-=======
-
->>>>>>> 631d696d5ec4f65516922ba93c6e4ce67ed2b8ed
 const ProductContext = React.createContext()
 class ProductProvider extends Component {
     state = {
@@ -15,52 +11,84 @@ class ProductProvider extends Component {
             "description": "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
             "category": "men clothing",
             "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
-<<<<<<< HEAD
         },
         productsAddedToCart: [],
-        total: 0
+        total: 0,
+        productQuantities: {}
     }
-=======
-        }
-    }
-    
->>>>>>> 631d696d5ec4f65516922ba93c6e4ce67ed2b8ed
     getItem = (id) => {
         const product = this.state.products.find((item) => item.id === id);
         return product; 
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> 631d696d5ec4f65516922ba93c6e4ce67ed2b8ed
     handleDetail = (id) => {
         const product = this.getItem(id)
         this.setState({
             clickedProduct: product
-        })
-    }
-<<<<<<< HEAD
+        })}
 
     removeToCart = (id) => {
+        const product = this.getItem(id);
         const sorted = this.state.productsAddedToCart.filter(
             (prod) => prod.id !== id
         );
+        this.setState( {
+            productsAddedToCart: sorted
+        })
+        this.setState(prevstate  => ({
+            total: prevstate.total - (product.price * prevstate.productQuantities[id])
+        }))
+        
+    }
+    addToCart = (id) => {
+            const product = this.getItem(id);
+            if (!this.state.productQuantities[id]) {
+                this.setState( prevstate => ({
+                productsAddedToCart: [...prevstate.productsAddedToCart, product]
+                }) )
+            }
+            this.count(id)
+    }
+        
+    count = (id) => {
+        const product = this.getItem(id);
+        let data = {...this.state.productQuantities};
+        if (data[id]) {
+            data[id]++
+            this.setState({
+                productQuantities: data
+            });
+        } else {
+            data[id] = 1;
+            this.setState({
+                productQuantities: data
+            });
+        }
         this.setState({
-            productsAddedToCart: sorted,
-            total: this.state.total - this.getItem(id).price
+            total: this.state.total + product.price 
         })
 
+        console.log(this.state.productQuantities)
+
     }
 
-    addToCart = (id) => {
-            const product = this.getItem(id)
-            this.setState({
-                productsAddedToCart: [...this.state.productsAddedToCart, product],
-                total: this.state.total += product.price
-            })
+    decreaseCount = (id) => {
+        const product = this.getItem(id);
+        let data = {...this.state.productQuantities};
+        if(data[id] > 0) {
+        data[id]--;
+        this.setState({
+            productQuantities: data,
+            total: this.state.total - product.price 
+        })
+    } 
+    else {
+        this.removeToCart(id)
     }
-=======
->>>>>>> 631d696d5ec4f65516922ba93c6e4ce67ed2b8ed
+    console.log(this.state.productQuantities)
+
+    }
+
     async componentDidMount() {
         this.setState({
             loading: true
@@ -70,12 +98,8 @@ class ProductProvider extends Component {
             const data = await response.json();
             if(data) {
                 this.setState({
-<<<<<<< HEAD
-                    products: data
-=======
                     products: data,
                     clickedProduct: data[0]
->>>>>>> 631d696d5ec4f65516922ba93c6e4ce67ed2b8ed
                 })
             } else {
                 this.setState({
@@ -94,40 +118,23 @@ class ProductProvider extends Component {
         }
         if(!this.state.loading) {
             return <h2>Loading...</h2>
-        }
-}
-<<<<<<< HEAD
-=======
-    
-
-    addToCart = () => {
-        console.log("from add to card method")
-    }
->>>>>>> 631d696d5ec4f65516922ba93c6e4ce67ed2b8ed
+        }}
 
     render() {
         return (
             < ProductContext.Provider value = {
                 {
-<<<<<<< HEAD
                 ...this.state,
                 handleDetail: this.handleDetail,
                 productsAddedToCart: this.state.productsAddedToCart,
+                productQuantities: this.state.productQuantities,
                 removeToCart: this.removeToCart,
+                decreaseCount: this.decreaseCount,
+                count: this.count,
                 addToCart: this.addToCart}}>
                 {this.props.children}
             </ProductContext.Provider>
-            
-=======
-                    ...this.state,
-                    handleDetail: this.handleDetail,
-                addToCart: this.addToCart}}>
-                {this.props.children}
-            </ProductContext.Provider>
->>>>>>> 631d696d5ec4f65516922ba93c6e4ce67ed2b8ed
-        )
-    }
-}
+            )}}
 
 const ProductConsumer = ProductContext.Consumer;
 export { ProductProvider, ProductConsumer};

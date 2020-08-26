@@ -15,7 +15,8 @@ class CartList extends Component {
                     return( 
                         value.productsAddedToCart.map(product => {
                         return <CartCo key={product.id} productToCart={product}
-                        handleDetail={value.handleDetail} total={this.total}/>
+                        handleDetail={value.handleDetail} total={this.total}
+                        count={value.count}/>
                     }))
                 }}
             </ProductConsumer>

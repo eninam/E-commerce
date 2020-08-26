@@ -2,23 +2,6 @@ import React, { Component } from 'react';
 import {ProductConsumer} from '../context/context'
 class CartCo extends Component {
 
-    state  = {
-        count : 1
-    }
-
-    increaseCount = () => {
-        this.setState({
-            count: this.state.count + 1
-        })
-    }
-
-    onTotal = (price) => {
-        this.increaseCount();
-        // console.log("in cart co " + price )
-        this.props.total(this.state.count, price)
-    }
-
-
     render() {
         const {id, price, title, description, category, image} = this.props.productToCart;
         return (
@@ -33,15 +16,17 @@ class CartCo extends Component {
                     {value => {
                         return (
                         <div>
-                        <button className="btn btn-primary btn-details"
+                        < button className = "btn btn-primary btn-details"
+                        onClick={() => value.count(id)}> Increase quantity: {value.productQuantities[id]} </button>
+                        < button className = "btn btn-white btn-details"
+                        onClick={() => value.decreaseCount(id)}>Decrease quantity</button>
+                        < button className = "btn btn-white btn-details"
                         onClick = {
                             () => { value.removeToCart(id)}} > remove To Cart </button>
                         </div>
                         )}}
                 </ProductConsumer>
-                < button className = "btn btn-white btn-details"
-                    onClick={() => this.onTotal(price)}> Increase quantity: {this.state.count} </button>
-                </div>
+                </div> 
             </article>
         );
     }
