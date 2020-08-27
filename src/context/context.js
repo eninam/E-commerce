@@ -21,6 +21,12 @@ class ProductProvider extends Component {
         return product; 
     }
 
+    clearCart = () => {
+        this.setState({
+            productsAddedToCart: [],
+            total: 0
+        })
+    }
     handleDetail = (id) => {
         const product = this.getItem(id)
         this.setState({
@@ -131,6 +137,7 @@ class ProductProvider extends Component {
                 removeToCart: this.removeToCart,
                 decreaseCount: this.decreaseCount,
                 count: this.count,
+                clearCart: this.clearCart,
                 addToCart: this.addToCart}}>
                 {this.props.children}
             </ProductContext.Provider>

@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 import {ProductConsumer} from '../context/context'
 import CartCo from './CartCo'
 class CartList extends Component {
-    total = (count, price) => {
-        this.props.outputTotal(count, price);
-    }
+    // total = (count, price) => {
+    //     this.props.outputTotal(count, price);
+    // }
+    
+    // const contextValue = useContext(UserContext);
     render() {
         return (
             <section className="section">
@@ -17,8 +19,11 @@ class CartList extends Component {
                         return <CartCo key={product.id} productToCart={product}
                         handleDetail={value.handleDetail} total={this.total}
                         count={value.count}/>
-                    }))
-                }}
+                    })
+                    
+                    )
+                }
+                }
             </ProductConsumer>
             </div>
             </section>

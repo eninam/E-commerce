@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {
+  Component
+} from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './components/Navbar'
@@ -12,7 +14,18 @@ import {
   Route,
 } from 'react-router-dom'
 
-function App() {
+class App extends Component {
+  // state = {
+  //   showPaypal: false
+  // };
+
+  // showPaypalButtons = () => {
+  //   this.setState({ showPaypal: true });
+  // };
+
+  render() {
+    // const { showPaypal } = this.state;
+
   return (
   <Router >
     <Navbar/>
@@ -20,10 +33,6 @@ function App() {
       {/* SWTICH renders the first child that maches the URL */}
       <Route exact path="/"><Home/></Route>
       <Route exact path = "/cart" > <Cart/> </Route>
-{/* <<<<<<< HEAD
-      <Route path="/cocktail/:id"><SingleProduct/></Route>
-=======
->>>>>>> 631d696d5ec4f65516922ba93c6e4ce67ed2b8ed */}
       <Route path="/product/:id"><SingleProduct/></Route>
       <Route exact path = "*" > <Error/> </Route>
 
@@ -31,6 +40,7 @@ function App() {
     </Switch>
   </Router>
   );
+  }
 }
 
 export default App;

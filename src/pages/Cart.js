@@ -1,28 +1,12 @@
 import React, { Component } from 'react';
 import CartList from '../components/CartList'
 import {ProductConsumer} from '../context/context'
-import StripeCheckout from 'react-stripe-checkout'
-import axios from 'axios'
-import {toast} from 'react-toastify'
-  import 'react-toastify/dist/ReactToastify.css';
-
-toast.configure();
+import 'react-toastify/dist/ReactToastify.css';
+import PayPalButton from '../components/PaypalButton'
 class cart extends Component {
-    
-    async handleToken(token){
-        const response = await axios.post('http://localhost:8080/checkout', {
-            token
-        });
-        const {status} =  response.data
-        if(status === 'success') {
-            toast('Success! check email for details', {type: 'success'})
-        } else {
-            toast('Something went wrong', {
-                type: 'error'
-            });
-        }
-    }
+
     render() {
+        console.log(this.props.ProductConsumer)
         return (
             <div>
                 < CartList outputTotal={this.outputTotal}/>
@@ -30,14 +14,11 @@ class cart extends Component {
                     {value => {
                         return ( 
                         <div>
-                            <h1>Total: {value.total}</h1>
-                            <StripeCheckout
-                            stripeKey = 'pk_test_51HKRKyIlwRlJnt5AAisaSu5k7KmW266otLxuFT563o18PGyP3N3jNJT6W0cz53CGOmbEff0SGjy7oWjUGCGmjdZ000lxfEdQPE'
-                            token={this.handleToken}
-                            billingAddress
-                            shippingAddress
-                            amount={value.total * 100}
-                            name="products"/> 
+                            {value.total > 0 && <button className="btn btn-white btn-details" onClick={value.clearCart}> Clear cart </button>}
+                            {/* <button className="btn btn-white btn-details" onClick={value.clearCart}> Clear cart </button> */}
+                            <h1>Total: { Math.round(value.total * 100) / 100}</h1>
+                            {value.total > 0 && <PayPalButton value={value} history={this.props.history}
+                             total={ Math.round(value.total * 100)/100} clearCart={value.clearCart}/> }
                             </div>
                             )
                         }}
@@ -45,5 +26,6 @@ class cart extends Component {
             </div>
         )}   
 }
+// cart.contextType = ProductConsumer;
 
 export default cart;
