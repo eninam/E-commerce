@@ -137,8 +137,23 @@ img {
   border-color: var(--primaryLightColor);
 }
 
+/* 
+====== 
+Error
+======
+*/
+.error-page {
+  display: flex;
+  justify-content: center;
+}
 
-/* products */
+.error-container {
+  text-align: center;
+  text-transform: capitalize;
+}
+
+/* 
+/* product list*/
 .section {
   padding: 4rem 0;
 }
@@ -152,7 +167,7 @@ img {
   margin-top: 1rem;
 }
 
-.cocktails-center {
+.products-center {
   width: var(--smallWidth);
   margin: 0 auto;
   max-width: var(--fullWidth);
@@ -204,18 +219,3 @@ img {
 /* ======= */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@1,200&display=swap');
 
-
-/* body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-} */
-
-/* code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-} */ 
-/* >>>>>>> 631d696d5ec4f65516922ba93c6e4ce67ed2b8ed */

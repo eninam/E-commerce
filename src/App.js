@@ -15,19 +15,10 @@ import {
 } from 'react-router-dom'
 
 class App extends Component {
-  // state = {
-  //   showPaypal: false
-  // };
-
-  // showPaypalButtons = () => {
-  //   this.setState({ showPaypal: true });
-  // };
 
   render() {
-    // const { showPaypal } = this.state;
-
   return (
-  <Router >
+  <Router  >
     <Navbar/>
     <Switch> 
       {/* SWTICH renders the first child that maches the URL */}
@@ -35,8 +26,7 @@ class App extends Component {
       <Route exact path = "/cart" > <Cart/> </Route>
       <Route path="/product/:id"><SingleProduct/></Route>
       <Route exact path = "*" > <Error/> </Route>
-
-      {/* < Route path = "*"> <Error/> </Route> */}
+      < Route path = "*"> <Error/> </Route>
     </Switch>
   </Router>
   );

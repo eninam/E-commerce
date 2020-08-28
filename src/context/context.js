@@ -24,7 +24,12 @@ class ProductProvider extends Component {
     clearCart = () => {
         this.setState({
             productsAddedToCart: [],
-            total: 0
+            total: 0, 
+            productQuantities: {}
+        }, () => {
+            localStorage.setItem('cart', JSON.stringify(this.state.productsAddedToCart));
+            localStorage.setItem('total', JSON.stringify(this.state.total));
+            localStorage.setItem('data', JSON.stringify(this.state.productQuantities))
         })
     }
     handleDetail = (id) => {
@@ -35,23 +40,31 @@ class ProductProvider extends Component {
 
     removeToCart = (id) => {
         const product = this.getItem(id);
+        let data = {...this.state.productQuantities};
+        delete data[id];
+        this.setState({
+            productQuantities: data,
+        }, () => {
+            localStorage.setItem('data', JSON.stringify(data));
+        })
         const sorted = this.state.productsAddedToCart.filter(
             (prod) => prod.id !== id
         );
         this.setState( {
-            productsAddedToCart: sorted
+            productsAddedToCart: sorted, 
+        }, () => {
+            localStorage.setItem('cart', JSON.stringify(sorted));
         })
         this.setState(prevstate  => ({
-            total: prevstate.total - (product.price * prevstate.productQuantities[id])
-        }))
-        
+            total: prevstate.total - (product.price * this.state.productQuantities[id])
+        }), () => localStorage.setItem('total', JSON.stringify(this.state.total)))
     }
     addToCart = (id) => {
             const product = this.getItem(id);
             if (!this.state.productQuantities[id]) {
                 this.setState( prevstate => ({
                 productsAddedToCart: [...prevstate.productsAddedToCart, product]
-                }) )
+                }), () => localStorage.setItem('cart', JSON.stringify(this.state.productsAddedToCart)))
             }
             this.count(id)
     }
@@ -63,41 +76,65 @@ class ProductProvider extends Component {
             data[id]++
             this.setState({
                 productQuantities: data
-            });
+            }, () => localStorage.setItem('data', JSON.stringify(this.state.productQuantities)));
         } else {
             data[id] = 1;
             this.setState({
                 productQuantities: data
-            });
+            }, () => localStorage.setItem('data', JSON.stringify(this.state.productQuantities)));
         }
         this.setState({
             total: this.state.total + product.price 
-        })
-
-        console.log(this.state.productQuantities)
+        },() => localStorage.setItem('total', JSON.stringify(this.state.total)))
 
     }
 
     decreaseCount = (id) => {
         const product = this.getItem(id);
+        this.data = JSON.parse(localStorage.getItem('data'));
         let data = {...this.state.productQuantities};
-        if(data[id] > 0) {
         data[id]--;
+        if(data[id] > 0) {
         this.setState({
             productQuantities: data,
             total: this.state.total - product.price 
+        }, () => {
+            localStorage.setItem('data', JSON.stringify(this.state.productQuantities));
+            localStorage.setItem('total', JSON.stringify(this.state.total));
         })
     } 
-    else {
-        this.removeToCart(id)
+    
+    if(data[id] === 0) {
+        this.removeToCart(id);
     }
-    console.log(this.state.productQuantities)
-
+    if (Object.keys(data).length === 0 ) {
+        this.clearCart()
+    }
     }
 
     async componentDidMount() {
+            this.productsAddedToCart = JSON.parse(localStorage.getItem('cart'));
+            this.total = JSON.parse(localStorage.getItem('total'));
+            this.data = JSON.parse(localStorage.getItem('data'));
+
+            if (localStorage.getItem('cart')) {
+                this.setState({
+                    productsAddedToCart: this.productsAddedToCart
+                });
+            }
+            if (localStorage.getItem('data')) {
+                this.setState({
+                    productQuantities: this.data
+                });
+            }
+            if (localStorage.getItem('total')) {
+                this.setState({
+                    total: this.total
+                });
+            }
+
         this.setState({
-            loading: true
+            loading: true,
         })
         try {
             const response = await fetch(`https://fakestoreapi.com/products?limit=8`)

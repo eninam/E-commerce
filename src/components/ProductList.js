@@ -5,11 +5,12 @@ import Product from './Product'
 
 class productList extends Component {
     render() {
+        // console.log("in prod list")
+        // console.log(this.props)
         return (
-
             <section className="section">
                 <h2 className="section-title">Products</h2>
-                <div className="cocktails-center">
+                < div className = "products-center" >
             <ProductConsumer>
                 { value => {
                     return( 

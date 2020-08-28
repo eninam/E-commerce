@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom'
-// import { Container } from 'semantic-ui-react'
 import {ProductConsumer} from '../context/context'
 class SingleProduct extends Component {
     
@@ -8,7 +7,6 @@ class SingleProduct extends Component {
         return (
             <ProductConsumer>
                 {value => {
-// <<<<<<< HEAD
                     const { title, image, description, category, price} 
                     = value.clickedProduct;
                     return(
